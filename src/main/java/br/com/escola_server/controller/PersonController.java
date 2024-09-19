@@ -2,10 +2,13 @@ package br.com.escola_server.controller;
 
 import br.com.escola_server.models.PersonDTO;
 import br.com.escola_server.services.PersonService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,8 +33,10 @@ public class PersonController {
     }
 
     @PostMapping
-    public ResponseEntity<PersonDTO> save(@RequestBody PersonDTO personDTO) {
-        return ResponseEntity.ok(personService.save(personDTO));
+    public ResponseEntity<PersonDTO> save(@RequestBody PersonDTO personDTO, HttpServletRequest request) throws URISyntaxException {
+        PersonDTO personSaved = personService.save(personDTO);
+        URI location = new URI(String.format("%s/%s", request.getRequestURL(), personSaved.getId()));
+        return ResponseEntity.created(location).body(personSaved);
     }
 
     @PutMapping
