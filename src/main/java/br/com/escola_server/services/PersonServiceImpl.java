@@ -72,8 +72,8 @@ public class PersonServiceImpl implements PersonService {
             }
 
             Person entity = Converter.convertTo(person, Person.class);
-            Person entitySaved = personRepository.save(entity);
-            return Converter.convertTo(entitySaved, PersonDTO.class);
+            Person personEdited = personRepository.save(entity);
+            return Converter.convertTo(personEdited, PersonDTO.class);
         } catch (Exception e) {
             log.error(e.getLocalizedMessage());
             return null;
@@ -90,7 +90,6 @@ public class PersonServiceImpl implements PersonService {
         } catch (Exception e) {
             log.error(e.getLocalizedMessage());
         }
-
     }
 
     @Override
