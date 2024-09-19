@@ -8,7 +8,7 @@ spring:
     name: escola-server
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/escola-server
+    url: ${URL_DATABASE:jdbc:postgresql://localhost:5432/escola-server}
     username: ${USERNAME_DATABASE:postgres}
     password: ${PASSWORD_DATABASE:Admin@123}
     driver-class-name: org.postgresql.Driver
