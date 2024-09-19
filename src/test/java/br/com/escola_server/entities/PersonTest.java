@@ -1,6 +1,5 @@
 package br.com.escola_server.entities;
 
-import br.com.escola_server.entities.Person;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -9,7 +8,6 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 public class PersonTest {
@@ -62,7 +60,7 @@ public class PersonTest {
 
     private void checkAll(Person entity) {
         assertNotNull(entity);
-        assertAll( () -> {
+        assertAll(() -> {
             assertNotNull(entity, createMessage("Person", MSG_NOT_NULL));
 
             assertNotNull(entity.getId());

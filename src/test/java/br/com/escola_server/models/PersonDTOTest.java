@@ -60,7 +60,7 @@ public class PersonDTOTest {
 
     private void checkAll(PersonDTO dto) {
         assertNotNull(dto);
-        assertAll( () -> {
+        assertAll(() -> {
             assertNotNull(dto, createMessage("PersonDTO", MSG_NOT_NULL));
 
             assertNotNull(dto.getId());
