@@ -1,14 +1,16 @@
 package br.com.escola_server.services;
 
 import br.com.escola_server.entities.Person;
+import br.com.escola_server.entities.StatusOperationType;
+import br.com.escola_server.exceptions.BusinessException;
 import br.com.escola_server.models.PersonDTO;
 import br.com.escola_server.repositories.PersonRepository;
 import br.com.escola_server.utilitaries.Converter;
 import jakarta.persistence.NoResultException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -16,17 +18,17 @@ import java.util.UUID;
 @Service
 @Log4j2
 public class PersonServiceImpl implements PersonService {
-    private final PersonRepository personRepository;
+    private final PersonRepository repository;
 
-    public PersonServiceImpl(PersonRepository personRepository) {
-        this.personRepository = personRepository;
+    public PersonServiceImpl(PersonRepository repository) {
+        this.repository = repository;
     }
 
 
     @Override
     public List<PersonDTO> findAll() {
         try {
-            return personRepository
+            return repository
                     .findAll()
                     .stream()
                     .map(item -> Converter.convertTo(item, PersonDTO.class))
@@ -34,14 +36,14 @@ public class PersonServiceImpl implements PersonService {
 
         } catch (Exception e) {
             log.error(e.getMessage());
-            return new ArrayList<>();
+            throw new BusinessException(StatusOperationType.ERROR.getText());
         }
     }
 
     @Override
     public PersonDTO findById(UUID id) {
         try {
-            Optional<Person> personId = personRepository.findById(id);
+            Optional<Person> personId = repository.findById(id);
 
             if (personId.isEmpty()) {
                 throw new NoResultException("Person not found");
@@ -49,22 +51,24 @@ public class PersonServiceImpl implements PersonService {
             return Converter.convertTo(personId.get(), PersonDTO.class);
         } catch (Exception e) {
             log.error(e.getLocalizedMessage());
-            return null;
+            throw e;
         }
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public PersonDTO save(PersonDTO dto) {
         try {
-            Person personSaved = personRepository.save(Converter.convertTo(dto, Person.class));
+            Person personSaved = repository.save(Converter.convertTo(dto, Person.class));
             return Converter.convertTo(personSaved, PersonDTO.class);
         } catch (Exception e) {
             log.error(e.getLocalizedMessage());
-            return null;
+            throw new BusinessException(StatusOperationType.ERROR.getText());
         }
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public PersonDTO update(PersonDTO dto) {
         try {
             if (!existsById(dto.getId())) {
@@ -72,28 +76,30 @@ public class PersonServiceImpl implements PersonService {
             }
 
             Person entity = Converter.convertTo(dto, Person.class);
-            Person personEdited = personRepository.save(entity);
+            Person personEdited = repository.save(entity);
             return Converter.convertTo(personEdited, PersonDTO.class);
         } catch (Exception e) {
             log.error(e.getLocalizedMessage());
-            return null;
+            throw e;
         }
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void delete(UUID id) {
         try {
             if (!existsById(id)) {
                 throw new NoResultException("Person not found");
             }
-            personRepository.deleteById(id);
+            repository.deleteById(id);
         } catch (Exception e) {
             log.error(e.getLocalizedMessage());
+            throw e;
         }
     }
 
     @Override
     public boolean existsById(UUID id) {
-        return personRepository.existsById(id);
+        return repository.existsById(id);
     }
 }
