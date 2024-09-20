@@ -9,11 +9,9 @@ import br.com.escola_server.repositories.ContactRepository;
 import br.com.escola_server.utilitaries.Converter;
 import jakarta.persistence.NoResultException;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -61,19 +59,20 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    @Transactional(rollbackFor = BusinessException.class)
+    @Transactional(rollbackFor = Exception.class)
     public ContactDTO save(ContactDTO dto) {
         try {
             Contact entity = Converter.convertTo(dto, Contact.class);
             Contact contactSaved = repository.save(entity);
             return Converter.convertTo(contactSaved, ContactDTO.class);
         } catch (Exception e) {
+            log.error(e.getLocalizedMessage());
             throw new BusinessException(StatusOperationType.ERROR.getText());
         }
     }
 
     @Override
-    @Transactional(rollbackFor = BusinessException.class)
+    @Transactional(rollbackFor = Exception.class)
     public ContactDTO update(ContactDTO dto) {
         try {
             if (!existsById(dto.getId())) {
@@ -85,12 +84,7 @@ public class ContactServiceImpl implements ContactService {
             return Converter.convertTo(contactEdited, ContactDTO.class);
         } catch (Exception e) {
             log.error(e.getLocalizedMessage());
-
-            if ( e instanceof NoResultException ) {
-                throw new BusinessException(e);
-            }
-
-            throw new BusinessException(StatusOperationType.ERROR.getText());
+            throw e;
         }
     }
 
