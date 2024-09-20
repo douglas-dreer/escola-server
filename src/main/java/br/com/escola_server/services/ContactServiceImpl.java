@@ -1,13 +1,17 @@
 package br.com.escola_server.services;
 
 import br.com.escola_server.entities.Contact;
+import br.com.escola_server.entities.StatusOperationType;
+import br.com.escola_server.exceptions.BusinessException;
 import br.com.escola_server.models.ContactDTO;
 import br.com.escola_server.repositories.ContactRepository;
 
 import br.com.escola_server.utilitaries.Converter;
 import jakarta.persistence.NoResultException;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,10 +38,9 @@ public class ContactServiceImpl implements ContactService {
                     .stream()
                     .map(item -> Converter.convertTo(item, ContactDTO.class))
                     .toList();
-
         } catch (Exception e) {
             log.error(e.getMessage());
-            return new ArrayList<>();
+            throw new BusinessException(StatusOperationType.ERROR.getText());
         }
     }
 
@@ -47,32 +50,34 @@ public class ContactServiceImpl implements ContactService {
             Optional<Contact> contact = repository.findById(id);
 
             if (contact.isEmpty()) {
-                throw new NoResultException("Person not found");
+               throw new NoResultException("No contact found with id: " + id);
             }
+
             return Converter.convertTo(contact, ContactDTO.class);
         } catch (Exception e) {
             log.error(e.getLocalizedMessage());
-            return null;
+            throw e;
         }
     }
 
     @Override
+    @Transactional(rollbackFor = BusinessException.class)
     public ContactDTO save(ContactDTO dto) {
         try {
             Contact entity = Converter.convertTo(dto, Contact.class);
             Contact contactSaved = repository.save(entity);
             return Converter.convertTo(contactSaved, ContactDTO.class);
         } catch (Exception e) {
-            log.error(e.getLocalizedMessage());
-            return null;
+            throw new BusinessException(StatusOperationType.ERROR.getText());
         }
     }
 
     @Override
+    @Transactional(rollbackFor = BusinessException.class)
     public ContactDTO update(ContactDTO dto) {
         try {
             if (!existsById(dto.getId())) {
-                throw new NoResultException("Person not found");
+                throw new NoResultException(StatusOperationType.NOT_FOUND.getText());
             }
 
             Contact entity = Converter.convertTo(dto, Contact.class);
@@ -80,7 +85,12 @@ public class ContactServiceImpl implements ContactService {
             return Converter.convertTo(contactEdited, ContactDTO.class);
         } catch (Exception e) {
             log.error(e.getLocalizedMessage());
-            return null;
+
+            if ( e instanceof NoResultException ) {
+                throw new BusinessException(e);
+            }
+
+            throw new BusinessException(StatusOperationType.ERROR.getText());
         }
     }
 
@@ -88,11 +98,12 @@ public class ContactServiceImpl implements ContactService {
     public void delete(UUID id) {
         try {
             if (!existsById(id)) {
-                throw new NoResultException("Contact not found");
+                throw new NoResultException("No contact found with id: " + id);
             }
             repository.deleteById(id);
         } catch (Exception e) {
             log.error(e.getLocalizedMessage());
+            throw e;
         }
     }
 
