@@ -10,9 +10,9 @@ public interface PersonService {
 
     PersonDTO findById(UUID id);
 
-    PersonDTO save(PersonDTO person);
+    PersonDTO save(PersonDTO dto);
 
-    PersonDTO update(PersonDTO person);
+    PersonDTO update(PersonDTO dto);
 
     void delete(UUID id) throws Exception;
 

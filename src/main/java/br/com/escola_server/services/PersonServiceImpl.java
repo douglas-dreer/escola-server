@@ -54,9 +54,9 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public PersonDTO save(PersonDTO person) {
+    public PersonDTO save(PersonDTO dto) {
         try {
-            Person personSaved = personRepository.save(Converter.convertTo(person, Person.class));
+            Person personSaved = personRepository.save(Converter.convertTo(dto, Person.class));
             return Converter.convertTo(personSaved, PersonDTO.class);
         } catch (Exception e) {
             log.error(e.getLocalizedMessage());
@@ -65,13 +65,13 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public PersonDTO update(PersonDTO person) {
+    public PersonDTO update(PersonDTO dto) {
         try {
-            if (!existsById(person.getId())) {
+            if (!existsById(dto.getId())) {
                 throw new NoResultException("Person not found");
             }
 
-            Person entity = Converter.convertTo(person, Person.class);
+            Person entity = Converter.convertTo(dto, Person.class);
             Person personEdited = personRepository.save(entity);
             return Converter.convertTo(personEdited, PersonDTO.class);
         } catch (Exception e) {
