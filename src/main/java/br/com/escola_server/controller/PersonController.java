@@ -1,5 +1,6 @@
 package br.com.escola_server.controller;
 
+import br.com.escola_server.exceptions.BusinessException;
 import br.com.escola_server.models.PersonDTO;
 import br.com.escola_server.services.PersonService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,36 +17,57 @@ import java.util.UUID;
 @RequestMapping("/persons")
 @Log4j2
 public class PersonController {
-    private final PersonService personService;
+    private final PersonService service;
 
-    public PersonController(PersonService personService) {
-        this.personService = personService;
+    public PersonController(PersonService service) {
+        this.service = service;
     }
 
     @GetMapping
     public ResponseEntity<List<PersonDTO>> findAll() {
-        return ResponseEntity.ok(personService.findAll());
+        try {
+            return ResponseEntity.ok(service.findAll());
+        } catch (BusinessException e) {
+            throw e;
+        }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<PersonDTO> findById(@PathVariable UUID id) {
-        return ResponseEntity.ok(personService.findById(id));
+        try {
+            return ResponseEntity.ok(service.findById(id));
+        } catch (BusinessException e) {
+            throw e;
+        }
     }
 
     @PostMapping
     public ResponseEntity<PersonDTO> save(@RequestBody PersonDTO personDTO, HttpServletRequest request) throws URISyntaxException {
-        PersonDTO personSaved = personService.save(personDTO);
-        URI location = new URI(String.format("%s/%s", request.getRequestURL(), personSaved.getId()));
-        return ResponseEntity.created(location).body(personSaved);
+        try {
+            PersonDTO personSaved = service.save(personDTO);
+            URI location = new URI(String.format("%s/%s", request.getRequestURL(), personSaved.getId()));
+            return ResponseEntity.created(location).body(personSaved);
+        } catch (BusinessException e) {
+            throw e;
+        }
     }
 
     @PatchMapping
     public ResponseEntity<PersonDTO> update(@RequestBody PersonDTO personDTO) {
-        return ResponseEntity.ok(personService.update(personDTO));
+       try {
+           return ResponseEntity.ok(service.update(personDTO));
+       } catch (BusinessException e) {
+           throw e;
+       }
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable UUID id) throws Exception {
-        personService.delete(id);
+    public ResponseEntity<String> delete(@PathVariable UUID id) throws Exception {
+        try {
+            service.delete(id);
+            return ResponseEntity.ok("Deleted successfully");
+        } catch (BusinessException e) {
+            throw e;
+        }
     }
 }
