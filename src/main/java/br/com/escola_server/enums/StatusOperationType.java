@@ -1,4 +1,4 @@
-package br.com.escola_server.entities;
+package br.com.escola_server.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

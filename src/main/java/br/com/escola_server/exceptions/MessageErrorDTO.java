@@ -1,6 +1,6 @@
 package br.com.escola_server.exceptions;
 
-import br.com.escola_server.entities.StatusOperationType;
+import br.com.escola_server.enums.StatusOperationType;
 import lombok.*;
 
 import java.time.LocalDateTime;

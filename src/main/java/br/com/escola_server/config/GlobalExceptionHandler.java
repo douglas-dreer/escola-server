@@ -1,6 +1,6 @@
 package br.com.escola_server.config;
 
-import br.com.escola_server.entities.StatusOperationType;
+import br.com.escola_server.enums.StatusOperationType;
 import br.com.escola_server.exceptions.BusinessException;
 import br.com.escola_server.exceptions.MessageErrorDTO;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;

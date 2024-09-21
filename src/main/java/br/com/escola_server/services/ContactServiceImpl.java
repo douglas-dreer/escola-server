@@ -1,7 +1,7 @@
 package br.com.escola_server.services;
 
 import br.com.escola_server.entities.Contact;
-import br.com.escola_server.entities.StatusOperationType;
+import br.com.escola_server.enums.StatusOperationType;
 import br.com.escola_server.exceptions.BusinessException;
 import br.com.escola_server.models.ContactDTO;
 import br.com.escola_server.repositories.ContactRepository;
