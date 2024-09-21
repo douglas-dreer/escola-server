@@ -24,8 +24,7 @@ public class GlobalExceptionHandler {
         Throwable cause = e.getCause();
 
         String message = "Invalid request payload.";
-        if (cause instanceof InvalidFormatException) {
-            InvalidFormatException invalidFormatException = (InvalidFormatException) cause;
+        if (cause instanceof InvalidFormatException invalidFormatException) {
 
             if (invalidFormatException.getTargetType().isEnum()) {
                 String enumType = invalidFormatException.getTargetType().getSimpleName();
