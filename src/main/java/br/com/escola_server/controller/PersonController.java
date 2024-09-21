@@ -35,7 +35,7 @@ public class PersonController {
     @PostMapping
     public ResponseEntity<PersonDTO> save(@RequestBody PersonDTO personDTO, HttpServletRequest request) throws URISyntaxException {
         PersonDTO personSaved = personService.save(personDTO);
-        URI location = new URI(String.format("%s/%s", request.getRequestURL(), personSaved.getId()));
+        URI location = new URI(String.format("%s/%s", request.getRequestURL(), personSaved.getClass()));
         return ResponseEntity.created(location).body(personSaved);
     }
 
