@@ -1,10 +1,12 @@
 package br.com.escola_server.services;
 
 import br.com.escola_server.entities.Person;
+import br.com.escola_server.exceptions.BusinessException;
 import br.com.escola_server.models.PersonDTO;
 import br.com.escola_server.repositories.PersonRepository;
 import br.com.escola_server.utilitaries.Converter;
 import br.com.escola_server.utilitaries.DTOGenerator;
+import jakarta.persistence.NoResultException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -55,12 +57,11 @@ public class PersonServiceTest extends DTOGenerator {
     }
 
     @Test
-    public void mustReturnExceptionWhenListEmpty() {
+    public void mustReturnBusinessExceptionWhenFindAll() {
         when(repository.findAll()).thenThrow(new RuntimeException(MSG_INTERNAL_ERROR));
-        List<PersonDTO> personResultList = service.findAll();
 
+        assertThrows(BusinessException.class, () -> service.findAll());
         verify(repository, times(1)).findAll();
-        assertTrue(personResultList.isEmpty());
     }
 
     @Test
@@ -79,9 +80,7 @@ public class PersonServiceTest extends DTOGenerator {
     public void mustReturnNoResultWhenFindById() {
         when(repository.findById(any())).thenReturn(optionalEmptyResult);
 
-        PersonDTO personResult = service.findById(id);
-
-        assertNull(personResult);
+        assertThrows(NoResultException.class, () -> service.findById(id));
         verify(repository, times(1)).findById(any());
     }
 
@@ -98,8 +97,8 @@ public class PersonServiceTest extends DTOGenerator {
     @Test
     public void mustReturnExceptionWhenSave() {
         when(repository.save(any())).thenThrow(new RuntimeException(MSG_INTERNAL_ERROR));
-        PersonDTO personSaved = service.save(dto);
-        assertNull(personSaved);
+
+        assertThrows(BusinessException.class, () -> service.save(dto));
         verify(repository, times(1)).save(any());
     }
 
@@ -119,9 +118,7 @@ public class PersonServiceTest extends DTOGenerator {
     public void mustReturnNoResultExceptionWhenUpdate() {
         when(repository.existsById(any())).thenReturn(false);
 
-        PersonDTO personEdited = service.update(dto);
-
-        assertNull(personEdited);
+        assertThrows(NoResultException.class, () -> service.update(dto));
         verify(repository, times(1)).existsById(any());
     }
 
@@ -139,8 +136,7 @@ public class PersonServiceTest extends DTOGenerator {
     @Test
     public void mustReturnNoResultExceptionWhenDelete() {
         when(repository.existsById(id)).thenReturn(false);
-        service.delete(id);
-
+        assertThrows(NoResultException.class, () -> service.delete(id));
         verify(repository, times(1)).existsById(any());
     }
 }
