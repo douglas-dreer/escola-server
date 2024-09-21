@@ -56,5 +56,4 @@ jobs:
           SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/escola-server
           SPRING_DATASOURCE_USERNAME: postgres
           SPRING_DATASOURCE_PASSWORD: Admin@123
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=douglas-dreer_escola-server
-#clean verify sonar:sonar -Dsonar.projectKey=Escola-Server -Dsonar.projectName='Escola Server' -Dsonar.host.url=http://localhost:9000
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=douglas-dreer_escola-server -Dsonar.organization=douglas-dreer -Dsonar.login=${{ secrets.SONAR_TOKEN }}
