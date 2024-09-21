@@ -24,7 +24,6 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 public class PersonServiceTest extends DTOGenerator {
     private final List<Person> resultList = new ArrayList<>();
-    private final Optional<Person> optionalEmptyResult = Optional.empty();
     private final String MSG_INTERNAL_ERROR = "There was an internal error. Please try again later.";
     @Mock
     private PersonRepository repository;
@@ -32,7 +31,6 @@ public class PersonServiceTest extends DTOGenerator {
     private PersonServiceImpl service;
     private UUID id;
     private Person result = new Person();
-    private Optional<Person> optionalResult = Optional.empty();
     private PersonDTO dto;
 
     @BeforeEach
@@ -40,7 +38,6 @@ public class PersonServiceTest extends DTOGenerator {
         result = createPerson();
         id = result.getId();
         resultList.add(result);
-        optionalResult = Optional.of(result);
         dto = Converter.convertTo(result, PersonDTO.class);
     }
 
@@ -66,6 +63,7 @@ public class PersonServiceTest extends DTOGenerator {
 
     @Test
     public void mustReturnSuccessWhenFindById() {
+        Optional<Person> optionalResult = Optional.of(result);
         when(repository.findById(any())).thenReturn(optionalResult);
 
         PersonDTO personResult = service.findById(id);
@@ -78,6 +76,7 @@ public class PersonServiceTest extends DTOGenerator {
 
     @Test
     public void mustReturnNoResultWhenFindById() {
+        Optional<Person> optionalEmptyResult = Optional.empty();
         when(repository.findById(any())).thenReturn(optionalEmptyResult);
 
         assertThrows(NoResultException.class, () -> service.findById(id));
