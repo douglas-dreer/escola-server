@@ -8,9 +8,10 @@ import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 @Builder
 public class DocumentDTO {
     private UUID id;
     private String description;
-    private Int type;
+    private int type;
 }

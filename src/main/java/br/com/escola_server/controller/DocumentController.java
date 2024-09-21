@@ -37,13 +37,13 @@ public class DocumentController {
         return ResponseEntity.created(location).body(documentSaved);
     }
 
-    @PutMapping
-    public ResponseEntity<DocumentDTO> update(@RequestBody DocumentDTO documentDTO) {
-        return ResponseEntity.ok(documentService.update(documentDTO));
-    }
+ //   @PutMapping
+ //   public ResponseEntity<DocumentDTO> update(@RequestBody DocumentDTO documentDTO) {
+ //       return ResponseEntity.ok(documentService.update(documentDTO));
+ //   }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable UUID id) throws Exception {
-        documentServce.delete(id);
+        documentService.delete(id);
     }
 }

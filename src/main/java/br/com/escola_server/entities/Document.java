@@ -21,6 +21,6 @@ public class Document {
     @Column(name = "description", nullable = false)
     private String description;
     @Column(name = "type", nullable = false)
-    private Int type;
+    private int type;
 
 }
