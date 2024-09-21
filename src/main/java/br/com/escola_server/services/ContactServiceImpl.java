@@ -1,10 +1,11 @@
 package br.com.escola_server.services;
 
-import br.com.escola_server.entities.Person;
+import br.com.escola_server.entities.Contact;
 import br.com.escola_server.entities.StatusOperationType;
 import br.com.escola_server.exceptions.BusinessException;
-import br.com.escola_server.models.PersonDTO;
-import br.com.escola_server.repositories.PersonRepository;
+import br.com.escola_server.models.ContactDTO;
+import br.com.escola_server.repositories.ContactRepository;
+
 import br.com.escola_server.utilitaries.Converter;
 import jakarta.persistence.NoResultException;
 import lombok.extern.log4j.Log4j2;
@@ -15,25 +16,26 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+
+
 @Service
 @Log4j2
-public class PersonServiceImpl implements PersonService {
-    private final PersonRepository repository;
+public class ContactServiceImpl implements ContactService {
+    private final ContactRepository repository;
 
-    public PersonServiceImpl(PersonRepository repository) {
+    public ContactServiceImpl(ContactRepository repository) {
         this.repository = repository;
     }
 
 
     @Override
-    public List<PersonDTO> findAll() {
+    public List<ContactDTO> findAll() {
         try {
             return repository
                     .findAll()
                     .stream()
-                    .map(item -> Converter.convertTo(item, PersonDTO.class))
+                    .map(item -> Converter.convertTo(item, ContactDTO.class))
                     .toList();
-
         } catch (Exception e) {
             log.error(e.getMessage());
             throw new BusinessException(StatusOperationType.ERROR.getText());
@@ -41,14 +43,15 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public PersonDTO findById(UUID id) {
+    public ContactDTO findById(UUID id) {
         try {
-            Optional<Person> personId = repository.findById(id);
+            Optional<Contact> contact = repository.findById(id);
 
-            if (personId.isEmpty()) {
-                throw new NoResultException("Person not found");
+            if (contact.isEmpty()) {
+               throw new NoResultException("No contact found with id: " + id);
             }
-            return Converter.convertTo(personId.get(), PersonDTO.class);
+
+            return Converter.convertTo(contact, ContactDTO.class);
         } catch (Exception e) {
             log.error(e.getLocalizedMessage());
             throw e;
@@ -57,10 +60,11 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public PersonDTO save(PersonDTO dto) {
+    public ContactDTO save(ContactDTO dto) {
         try {
-            Person personSaved = repository.save(Converter.convertTo(dto, Person.class));
-            return Converter.convertTo(personSaved, PersonDTO.class);
+            Contact entity = Converter.convertTo(dto, Contact.class);
+            Contact contactSaved = repository.save(entity);
+            return Converter.convertTo(contactSaved, ContactDTO.class);
         } catch (Exception e) {
             log.error(e.getLocalizedMessage());
             throw new BusinessException(StatusOperationType.ERROR.getText());
@@ -69,15 +73,15 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public PersonDTO update(PersonDTO dto) {
+    public ContactDTO update(ContactDTO dto) {
         try {
             if (!existsById(dto.getId())) {
-                throw new NoResultException("Person not found");
+                throw new NoResultException(StatusOperationType.NOT_FOUND.getText());
             }
 
-            Person entity = Converter.convertTo(dto, Person.class);
-            Person personEdited = repository.save(entity);
-            return Converter.convertTo(personEdited, PersonDTO.class);
+            Contact entity = Converter.convertTo(dto, Contact.class);
+            Contact contactEdited = repository.save(entity);
+            return Converter.convertTo(contactEdited, ContactDTO.class);
         } catch (Exception e) {
             log.error(e.getLocalizedMessage());
             throw e;
@@ -85,11 +89,10 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public void delete(UUID id) {
         try {
             if (!existsById(id)) {
-                throw new NoResultException("Person not found");
+                throw new NoResultException("No contact found with id: " + id);
             }
             repository.deleteById(id);
         } catch (Exception e) {
