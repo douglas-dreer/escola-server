@@ -13,6 +13,6 @@ public enum StatusOperationType {
     INFO("INFORMATION", "Information"),
     WARNING("WARNING", "Warning");
 
-    private String code;
-    private String text;
+    private final String code;
+    private final String text;
 }
