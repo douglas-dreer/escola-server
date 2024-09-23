@@ -31,13 +31,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class PersonControllerTest extends DTOGenerator {
     private final static String ENDPOINT = "/persons";
+    private final List<PersonDTO> resultList = new ArrayList<>();
     @Autowired
     private MockMvc mockMvc;
     @MockBean
     private PersonServiceImpl service;
     private UUID id;
     private PersonDTO result = new PersonDTO();
-    private final List<PersonDTO> resultList = new ArrayList<>();
     private String personJSON;
 
     @BeforeEach
