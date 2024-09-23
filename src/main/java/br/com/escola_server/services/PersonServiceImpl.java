@@ -18,8 +18,8 @@ import java.util.UUID;
 @Service
 @Log4j2
 public class PersonServiceImpl implements PersonService {
-    private final PersonRepository repository;
     private static final String MSG_NOT_FOUND = "Person not found";
+    private final PersonRepository repository;
 
     public PersonServiceImpl(PersonRepository repository) {
         this.repository = repository;
