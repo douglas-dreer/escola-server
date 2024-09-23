@@ -5,7 +5,6 @@ import br.com.escola_server.enums.StatusOperationType;
 import br.com.escola_server.exceptions.BusinessException;
 import br.com.escola_server.models.ContactDTO;
 import br.com.escola_server.repositories.ContactRepository;
-
 import br.com.escola_server.utilitaries.Converter;
 import jakarta.persistence.NoResultException;
 import lombok.extern.log4j.Log4j2;
@@ -15,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
 
 
 @Service
@@ -48,7 +46,7 @@ public class ContactServiceImpl implements ContactService {
             Optional<Contact> contact = repository.findById(id);
 
             if (contact.isEmpty()) {
-               throw new NoResultException("No contact found with id: " + id);
+                throw new NoResultException("No contact found with id: " + id);
             }
 
             return Converter.convertTo(contact, ContactDTO.class);

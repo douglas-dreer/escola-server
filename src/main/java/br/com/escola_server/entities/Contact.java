@@ -2,10 +2,12 @@ package br.com.escola_server.entities;
 
 import br.com.escola_server.enums.ContactType;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -25,8 +27,8 @@ public class Contact {
     @Column(name = "contact_type", nullable = false)
     private ContactType contactType;
 
-    @Column(name = "description")
-    private String description;
+    @Column(name = "value")
+    private String value;
 
     @Column(name = "notes")
     private String notes;
