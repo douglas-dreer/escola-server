@@ -39,7 +39,7 @@ public class PersonController {
         return ResponseEntity.created(location).body(personSaved);
     }
 
-    @PutMapping
+    @PatchMapping
     public ResponseEntity<PersonDTO> update(@RequestBody PersonDTO personDTO) {
         return ResponseEntity.ok(personService.update(personDTO));
     }
