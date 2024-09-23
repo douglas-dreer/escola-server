@@ -29,8 +29,7 @@ public class BusinessException extends RuntimeException {
     public static PersistException fromPersistenceException(Exception e) {
         Throwable cause = e.getCause();
 
-        if (cause instanceof ConstraintViolationException) {
-            ConstraintViolationException cve = (ConstraintViolationException) cause;
+        if (cause instanceof ConstraintViolationException cve) {
             return new PersistException("Erro de restrição de integridade: " + cve.getConstraintName(), cve);
         } else if (cause instanceof DataIntegrityViolationException) {
             return new PersistException("Erro de integridade de dados.", cause);
