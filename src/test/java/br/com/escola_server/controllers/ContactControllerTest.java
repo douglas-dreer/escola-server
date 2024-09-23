@@ -88,11 +88,11 @@ public class ContactControllerTest extends DTOGenerator {
     void mustReturnSuccessWhenUpdate() throws Exception {
         when(service.update(result)).thenReturn(result);
 
-        MockHttpServletRequestBuilder postMethod = patch(ENDPOINT)
+        MockHttpServletRequestBuilder patchMethod = patch(ENDPOINT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(contactJSON);
 
-        mockMvc.perform(postMethod)
+        mockMvc.perform(patchMethod)
                 .andExpect(status().isOk());
     }
 

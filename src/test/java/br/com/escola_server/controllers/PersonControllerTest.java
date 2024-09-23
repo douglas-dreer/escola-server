@@ -84,11 +84,11 @@ public class PersonControllerTest extends DTOGenerator {
     void mustReturnSuccessWhenUpdate() throws Exception {
         when(service.update(result)).thenReturn(result);
 
-        MockHttpServletRequestBuilder postMethod = put(ENDPOINT)
+        MockHttpServletRequestBuilder patchMethod = patch(ENDPOINT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(personJSON);
 
-        mockMvc.perform(postMethod)
+        mockMvc.perform(patchMethod)
                 .andExpect(status().isOk());
     }
 
