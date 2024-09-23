@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
- public class PersonControllerTest extends DTOGenerator {
+public class PersonControllerTest extends DTOGenerator {
     private final static String ENDPOINT = "/persons";
     private final List<PersonDTO> resultList = new ArrayList<>();
     @Autowired
@@ -41,7 +41,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     private String personJSON;
 
     @BeforeEach
-     void setup() throws JsonProcessingException {
+    void setup() throws JsonProcessingException {
         result = createPersonDTO();
         resultList.add(result);
         id = result.getId();
@@ -49,7 +49,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     }
 
     @Test
-     void mustReturnSuccessWhenFindAll() throws Exception {
+    void mustReturnSuccessWhenFindAll() throws Exception {
         MockHttpServletRequestBuilder getMethod = get(ENDPOINT);
 
         when(service.findAll()).thenReturn(resultList);
@@ -60,7 +60,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     }
 
     @Test
-     void mustReturnSuccessWhenFindById() throws Exception {
+    void mustReturnSuccessWhenFindById() throws Exception {
         final String URI = String.format("%s/%s", ENDPOINT, id);
         MockHttpServletRequestBuilder getMethod = get(URI);
         when(service.findById(id)).thenReturn(result);
@@ -69,7 +69,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     }
 
     @Test
-     void mustReturnSuccessWhenSave() throws Exception {
+    void mustReturnSuccessWhenSave() throws Exception {
         when(service.save(result)).thenReturn(result);
 
         MockHttpServletRequestBuilder postMethod = post(ENDPOINT)
@@ -81,7 +81,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     }
 
     @Test
-     void mustReturnSuccessWhenUpdate() throws Exception {
+    void mustReturnSuccessWhenUpdate() throws Exception {
         when(service.update(result)).thenReturn(result);
 
         MockHttpServletRequestBuilder postMethod = put(ENDPOINT)
@@ -93,7 +93,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     }
 
     @Test
-     void mustReturnSuccessWhenDelete() throws Exception {
+    void mustReturnSuccessWhenDelete() throws Exception {
         doNothing().when(service).delete(any());
 
         final String URI = String.format("%s/%s", ENDPOINT, id);
