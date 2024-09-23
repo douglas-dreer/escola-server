@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
- public class ContactServiceTest extends DTOGenerator {
+public class ContactServiceTest extends DTOGenerator {
     private final List<Contact> resultList = new ArrayList<>();
     private final String MSG_INTERNAL_ERROR = "There was an internal error. Please try again later.";
     @Mock
@@ -34,7 +34,7 @@ import static org.mockito.Mockito.*;
     private ContactDTO dto;
 
     @BeforeEach
-     void setUp() {
+    void setUp() {
         result = createContact();
         id = result.getId();
         resultList.add(result);
@@ -42,7 +42,7 @@ import static org.mockito.Mockito.*;
     }
 
     @Test
-     void mustReturnSuccessWhenList() {
+    void mustReturnSuccessWhenList() {
         when(repository.findAll()).thenReturn(resultList);
 
         List<ContactDTO> contactResultList = service.findAll();
@@ -54,7 +54,7 @@ import static org.mockito.Mockito.*;
     }
 
     @Test
-     void mustReturnBusinessExceptionWhenFindAll() {
+    void mustReturnBusinessExceptionWhenFindAll() {
         when(repository.findAll()).thenThrow(new RuntimeException(MSG_INTERNAL_ERROR));
 
         assertThrows(BusinessException.class, () -> service.findAll());
@@ -62,7 +62,7 @@ import static org.mockito.Mockito.*;
     }
 
     @Test
-     void mustReturnSuccessWhenFindById() {
+    void mustReturnSuccessWhenFindById() {
         Optional<Contact> optionalResult = Optional.of(result);
         when(repository.findById(any())).thenReturn(optionalResult);
 
@@ -75,7 +75,7 @@ import static org.mockito.Mockito.*;
     }
 
     @Test
-     void mustReturnNoResultWhenFindById() {
+    void mustReturnNoResultWhenFindById() {
         Optional<Contact> optionalEmptyResult = Optional.empty();
         when(repository.findById(any())).thenReturn(optionalEmptyResult);
 
@@ -84,7 +84,7 @@ import static org.mockito.Mockito.*;
     }
 
     @Test
-     void mustReturnSuccessWhenSave() {
+    void mustReturnSuccessWhenSave() {
         when(repository.save(any())).thenReturn(result);
 
         ContactDTO personSaved = service.save(dto);
@@ -94,7 +94,7 @@ import static org.mockito.Mockito.*;
     }
 
     @Test
-     void mustReturnExceptionWhenSave() {
+    void mustReturnExceptionWhenSave() {
         when(repository.save(any())).thenThrow(new RuntimeException(MSG_INTERNAL_ERROR));
 
         assertThrows(BusinessException.class, () -> service.save(dto));
@@ -102,7 +102,7 @@ import static org.mockito.Mockito.*;
     }
 
     @Test
-     void mustReturnSuccessWhenUpdate() {
+    void mustReturnSuccessWhenUpdate() {
         when(repository.existsById(id)).thenReturn(true);
         when(repository.save(any())).thenReturn(result);
 
@@ -114,7 +114,7 @@ import static org.mockito.Mockito.*;
     }
 
     @Test
-     void mustReturnNoResultExceptionWhenUpdate() {
+    void mustReturnNoResultExceptionWhenUpdate() {
         when(repository.existsById(any())).thenReturn(false);
 
         assertThrows(NoResultException.class, () -> service.update(dto));
@@ -122,7 +122,7 @@ import static org.mockito.Mockito.*;
     }
 
     @Test
-     void mustReturnSuccessWhenDelete() {
+    void mustReturnSuccessWhenDelete() {
         when(repository.existsById(id)).thenReturn(true);
         doNothing().when(repository).deleteById(any());
 
@@ -133,7 +133,7 @@ import static org.mockito.Mockito.*;
     }
 
     @Test
-     void mustReturnNoResultExceptionWhenDelete() {
+    void mustReturnNoResultExceptionWhenDelete() {
         when(repository.existsById(id)).thenReturn(false);
         assertThrows(NoResultException.class, () -> service.delete(id));
         verify(repository, times(1)).existsById(any());

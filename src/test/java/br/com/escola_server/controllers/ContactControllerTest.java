@@ -1,13 +1,10 @@
 package br.com.escola_server.controllers;
 
-import br.com.escola_server.entities.Contact;
 import br.com.escola_server.models.ContactDTO;
 import br.com.escola_server.services.ContactServiceImpl;
-import br.com.escola_server.services.PersonServiceImpl;
 import br.com.escola_server.utilitaries.Converter;
 import br.com.escola_server.utilitaries.DTOGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import lombok.Generated;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +24,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 

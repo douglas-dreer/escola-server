@@ -10,7 +10,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
- public class PersonDTOTest {
+public class PersonDTOTest {
     private final String MSG_NOT_EQUALS = "%s not equals";
     private final String MSG_NOT_NULL = "%s not be null";
 
@@ -22,19 +22,19 @@ import static org.junit.jupiter.api.Assertions.*;
     private final LocalDateTime updatedAt = LocalDateTime.now();
 
     @Test
-     void mustReturnSuccessWhenConstructorWithoutParameters() {
+    void mustReturnSuccessWhenConstructorWithoutParameters() {
         PersonDTO dto = new PersonDTO();
         assertNotNull(dto);
     }
 
     @Test
-     void mustReturnSuccessWhenConstructorAllWithParameters() {
+    void mustReturnSuccessWhenConstructorAllWithParameters() {
         PersonDTO dto = new PersonDTO(id, firstName, lastName, birthday, createdAt, updatedAt);
         checkAll(dto);
     }
 
     @Test
-     void mustReturnSuccessWhenSetter() {
+    void mustReturnSuccessWhenSetter() {
         PersonDTO dto = new PersonDTO();
         dto.setId(id);
         dto.setFirstName(firstName);
@@ -46,7 +46,7 @@ import static org.junit.jupiter.api.Assertions.*;
     }
 
     @Test
-     void mustReturnSuccessWhenBuilder() {
+    void mustReturnSuccessWhenBuilder() {
         PersonDTO dto = PersonDTO.builder()
                 .id(id)
                 .firstName(firstName)
