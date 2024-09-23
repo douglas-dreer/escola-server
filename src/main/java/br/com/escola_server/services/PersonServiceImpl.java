@@ -19,6 +19,7 @@ import java.util.UUID;
 @Log4j2
 public class PersonServiceImpl implements PersonService {
     private final PersonRepository repository;
+    private static final String MSG_NOT_FOUND = "Person not found";
 
     public PersonServiceImpl(PersonRepository repository) {
         this.repository = repository;
@@ -46,7 +47,7 @@ public class PersonServiceImpl implements PersonService {
             Optional<Person> personId = repository.findById(id);
 
             if (personId.isEmpty()) {
-                throw new NoResultException("Person not found");
+                throw new NoResultException(MSG_NOT_FOUND);
             }
             return Converter.convertTo(personId.get(), PersonDTO.class);
         } catch (Exception e) {
@@ -72,7 +73,7 @@ public class PersonServiceImpl implements PersonService {
     public PersonDTO update(PersonDTO dto) {
         try {
             if (!existsById(dto.getId())) {
-                throw new NoResultException("Person not found");
+                throw new NoResultException(MSG_NOT_FOUND);
             }
 
             Person entity = Converter.convertTo(dto, Person.class);
@@ -89,7 +90,7 @@ public class PersonServiceImpl implements PersonService {
     public void delete(UUID id) {
         try {
             if (!existsById(id)) {
-                throw new NoResultException("Person not found");
+                throw new NoResultException(MSG_NOT_FOUND);
             }
             repository.deleteById(id);
         } catch (Exception e) {

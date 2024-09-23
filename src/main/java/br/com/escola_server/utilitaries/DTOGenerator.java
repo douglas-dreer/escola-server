@@ -12,7 +12,7 @@ import java.util.UUID;
 
 public class DTOGenerator {
     public PersonDTO createPersonDTO() {
-        PersonDTO person = PersonDTO
+        return PersonDTO
                 .builder()
                 .id(UUID.randomUUID())
                 .firstName("John")
@@ -21,7 +21,6 @@ public class DTOGenerator {
                 .createdAt(LocalDateTime.now().minusWeeks(1))
                 .updatedAt(LocalDateTime.now())
                 .build();
-        return person;
     }
 
     public Person createPerson() {
@@ -36,6 +35,7 @@ public class DTOGenerator {
                 .notes("Principal Mobile")
                 .createdAt(LocalDateTime.now().minusWeeks(1))
                 .updatedAt(LocalDateTime.now())
+                .isMain(true)
                 .build();
     }
 

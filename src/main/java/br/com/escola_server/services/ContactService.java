@@ -14,7 +14,7 @@ public interface ContactService {
 
     ContactDTO update(ContactDTO dto);
 
-    void delete(UUID id) throws Exception;
+    void delete(UUID id);
 
     boolean existsById(UUID id);
 }
