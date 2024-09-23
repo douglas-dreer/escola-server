@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 public class ContactControllerTest extends DTOGenerator {
-    private final static String ENDPOINT = "/contacts";
+    private static final String ENDPOINT = "/contacts";
     private final List<ContactDTO> resultList = new ArrayList<>();
     @Autowired
     private MockMvc mockMvc;
