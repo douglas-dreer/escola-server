@@ -1,6 +1,5 @@
 package br.com.escola_server.entities;
 
-import br.com.escola_server.models.ContactDTO;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -40,7 +39,7 @@ public class PersonTest {
 
     @Test
     void mustReturnSuccessWhenConstructorAllWithParameters() {
-        Person entity = new Person(id, firstName, lastName, birthday, contacts,  createdAt, updatedAt);
+        Person entity = new Person(id, firstName, lastName, birthday, contacts, createdAt, updatedAt);
         checkAll(entity);
     }
 
