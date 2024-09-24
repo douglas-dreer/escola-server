@@ -36,6 +36,7 @@ public class PersonControllerTest extends DTOGenerator {
     private MockMvc mockMvc;
     @MockBean
     private PersonServiceImpl service;
+
     private UUID id;
     private PersonDTO result = new PersonDTO();
     private String personJSON;

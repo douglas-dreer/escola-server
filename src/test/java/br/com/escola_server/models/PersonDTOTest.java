@@ -1,25 +1,36 @@
 package br.com.escola_server.models;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class PersonDTOTest {
-    private final String MSG_NOT_EQUALS = "%s not equals";
-    private final String MSG_NOT_NULL = "%s not be null";
+    private static final String MSG_NOT_EQUALS = "%s not equals";
+    private static final String MSG_NOT_NULL = "%s not be null";
+    private static final String MSG_NOT_EMPTY = "%s not be empty";
 
-    private final UUID id = UUID.randomUUID();
-    private final String firstName = "John Doe";
-    private final String lastName = "Doe";
-    private final LocalDate birthday = LocalDate.now().minusYears(18);
-    private final LocalDateTime createdAt = LocalDateTime.now().minusDays(1);
-    private final LocalDateTime updatedAt = LocalDateTime.now();
+    private static final UUID id = UUID.randomUUID();
+    private static final String firstName = "John Doe";
+    private static final String lastName = "Doe";
+    private static final List<ContactDTO> contacts = new ArrayList<>();
+    private static final LocalDate birthday = LocalDate.now().minusYears(18);
+    private static final LocalDateTime createdAt = LocalDateTime.now().minusDays(1);
+    private static final LocalDateTime updatedAt = LocalDateTime.now();
+
+    @BeforeAll
+    public static void setup() {
+        contacts.add(new ContactDTO());
+    }
 
     @Test
     void mustReturnSuccessWhenConstructorWithoutParameters() {
@@ -29,7 +40,7 @@ public class PersonDTOTest {
 
     @Test
     void mustReturnSuccessWhenConstructorAllWithParameters() {
-        PersonDTO dto = new PersonDTO(id, firstName, lastName, birthday, createdAt, updatedAt);
+        PersonDTO dto = new PersonDTO(id, firstName, lastName, birthday, contacts, createdAt, updatedAt);
         checkAll(dto);
     }
 
@@ -40,6 +51,7 @@ public class PersonDTOTest {
         dto.setFirstName(firstName);
         dto.setLastName(lastName);
         dto.setBirthDate(birthday);
+        dto.setContacts(contacts);
         dto.setCreatedAt(createdAt);
         dto.setUpdatedAt(updatedAt);
         checkAll(dto);
@@ -52,6 +64,7 @@ public class PersonDTOTest {
                 .firstName(firstName)
                 .lastName(lastName)
                 .birthDate(birthday)
+                .contacts(contacts)
                 .createdAt(createdAt)
                 .updatedAt(updatedAt)
                 .build();
@@ -69,6 +82,7 @@ public class PersonDTOTest {
             assertEquals(firstName, dto.getFirstName(), createMessage("First Name", MSG_NOT_EQUALS));
             assertEquals(lastName, dto.getLastName(), createMessage("Last Name", MSG_NOT_EQUALS));
             assertEquals(birthday, dto.getBirthDate(), createMessage("Birthday", MSG_NOT_EQUALS));
+            assertFalse(contacts.isEmpty(), createMessage("Contacts", MSG_NOT_EMPTY));
             assertEquals(createdAt, dto.getCreatedAt(), createMessage("Created At", MSG_NOT_EQUALS));
             assertEquals(updatedAt, dto.getUpdatedAt(), createMessage("Updated At", MSG_NOT_EQUALS));
         });

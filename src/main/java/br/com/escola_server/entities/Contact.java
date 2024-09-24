@@ -20,7 +20,7 @@ import java.util.UUID;
 @Builder
 public class Contact {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     @Enumerated(EnumType.STRING)

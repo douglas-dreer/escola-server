@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -18,6 +19,7 @@ public class PersonDTO {
     private String firstName;
     private String lastName;
     private LocalDate birthDate;
+    private List<ContactDTO> contacts;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

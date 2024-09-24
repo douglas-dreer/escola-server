@@ -10,6 +10,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -20,7 +21,7 @@ import java.util.UUID;
 @Builder
 public class Person {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
     @Column(name = "first_name", nullable = false)
     private String firstName;
@@ -30,6 +31,10 @@ public class Person {
     @Temporal(TemporalType.DATE)
     @Column(name = "birthdate")
     private LocalDate birthDate;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "person_id")
+    private List<Contact> contacts;
 
     @CreationTimestamp
     @Column(updatable = false)
