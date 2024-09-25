@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-public class ContactServiceTest extends DTOGenerator {
+class ContactServiceTest extends DTOGenerator {
     private final List<Contact> resultList = new ArrayList<>();
     private final String MSG_INTERNAL_ERROR = "There was an internal error. Please try again later.";
     @Mock
@@ -103,7 +103,7 @@ public class ContactServiceTest extends DTOGenerator {
 
     @Test
     void mustReturnSuccessWhenUpdate() {
-        when(repository.existsById(id)).thenReturn(true);
+        when(repository.existsById(any())).thenReturn(true);
         when(repository.save(any())).thenReturn(result);
 
         ContactDTO contactEdited = service.update(dto);
@@ -123,7 +123,7 @@ public class ContactServiceTest extends DTOGenerator {
 
     @Test
     void mustReturnSuccessWhenDelete() {
-        when(repository.existsById(id)).thenReturn(true);
+        when(repository.existsById(any())).thenReturn(true);
         doNothing().when(repository).deleteById(any());
 
         service.delete(id);
@@ -134,7 +134,7 @@ public class ContactServiceTest extends DTOGenerator {
 
     @Test
     void mustReturnNoResultExceptionWhenDelete() {
-        when(repository.existsById(id)).thenReturn(false);
+        when(repository.existsById(any())).thenReturn(false);
         assertThrows(NoResultException.class, () -> service.delete(id));
         verify(repository, times(1)).existsById(any());
     }

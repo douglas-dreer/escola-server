@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class ContactControllerTest extends DTOGenerator {
+class ContactControllerTest extends DTOGenerator {
     private static final String ENDPOINT = "/contacts";
     private final List<ContactDTO> resultList = new ArrayList<>();
     @Autowired
@@ -63,7 +63,7 @@ public class ContactControllerTest extends DTOGenerator {
     void mustReturnSuccessWhenFindById() throws Exception {
         final String URI = String.format("%s/%s", ENDPOINT, id);
         MockHttpServletRequestBuilder getMethod = get(URI);
-        when(service.findById(id)).thenReturn(result);
+        when(service.findById(any())).thenReturn(result);
         mockMvc.perform(getMethod)
                 .andExpect(status().isOk());
     }

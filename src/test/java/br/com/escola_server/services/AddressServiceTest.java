@@ -22,12 +22,15 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-public class AddressServiceTest extends DTOGenerator {
+class AddressServiceTest extends DTOGenerator {
     private final List<Address> resultList = new ArrayList<>();
     private final String MSG_INTERNAL_ERROR = "There was an internal error. Please try again later.";
+
     @Mock
     private AddressRepository repository;
+
     @InjectMocks
+
     private AddressServiceImpl service;
     private UUID id;
     private Address result = new Address();
@@ -103,7 +106,7 @@ public class AddressServiceTest extends DTOGenerator {
 
     @Test
     void mustReturnSuccessWhenUpdate() {
-        when(repository.existsById(id)).thenReturn(true);
+        when(repository.existsById(any())).thenReturn(true);
         when(repository.save(any())).thenReturn(result);
 
         AddressDTO contactEdited = service.update(dto);
@@ -123,7 +126,7 @@ public class AddressServiceTest extends DTOGenerator {
 
     @Test
     void mustReturnSuccessWhenDelete() {
-        when(repository.existsById(id)).thenReturn(true);
+        when(repository.existsById(any())).thenReturn(true);
         doNothing().when(repository).deleteById(any());
 
         service.delete(id);
@@ -134,7 +137,7 @@ public class AddressServiceTest extends DTOGenerator {
 
     @Test
     void mustReturnNoResultExceptionWhenDelete() {
-        when(repository.existsById(id)).thenReturn(false);
+        when(repository.existsById(any())).thenReturn(false);
         assertThrows(NoResultException.class, () -> service.delete(id));
         verify(repository, times(1)).existsById(any());
     }

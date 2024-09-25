@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class AddressControllerTest extends DTOGenerator {
+class AddressControllerTest extends DTOGenerator {
     @Autowired
     private MockMvc mockMvc;
     @MockBean
@@ -64,7 +64,7 @@ public class AddressControllerTest extends DTOGenerator {
     void mustReturnSuccessWhenFindById() throws Exception {
         final String URI = String.format("%s/%s", ENDPOINT, id);
         MockHttpServletRequestBuilder getMethod = get(URI);
-        when(service.findById(id)).thenReturn(result);
+        when(service.findById(any())).thenReturn(result);
         mockMvc.perform(getMethod)
                 .andExpect(status().isOk());
     }
