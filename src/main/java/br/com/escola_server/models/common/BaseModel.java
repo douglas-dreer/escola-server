@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public abstract class BaseModel<T> implements Identifiable {
 
-    private Class<T> entityClass;
+    private final Class<T> entityClass;
 
     protected BaseModel(Class<T> entityClass) {
         Objects.requireNonNull(entityClass, "entityClass must not be null");
