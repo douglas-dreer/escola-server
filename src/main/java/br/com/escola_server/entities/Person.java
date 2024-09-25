@@ -36,6 +36,10 @@ public class Person {
     @JoinColumn(name = "person_id")
     private List<Contact> contacts;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "person_id")
+    private List<Address> addresses;
+
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime createdAt;

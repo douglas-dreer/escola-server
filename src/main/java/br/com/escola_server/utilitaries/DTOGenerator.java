@@ -3,6 +3,7 @@ package br.com.escola_server.utilitaries;
 import br.com.escola_server.entities.Address;
 import br.com.escola_server.entities.Contact;
 import br.com.escola_server.entities.Person;
+import br.com.escola_server.enums.AddressType;
 import br.com.escola_server.enums.ContactType;
 import br.com.escola_server.models.AddressDTO;
 import br.com.escola_server.models.ContactDTO;
@@ -18,12 +19,14 @@ import java.util.UUID;
 public class DTOGenerator {
     public PersonDTO createPersonDTO() {
         ContactDTO contactDTO = createContactDTO();
+        AddressDTO addressDTO = createAddressDTO();
         return PersonDTO
                 .builder()
                 .id(UUID.randomUUID())
                 .firstName("John")
                 .lastName("Doe")
                 .contacts(Collections.singletonList(contactDTO))
+                .addresses(Collections.singletonList(addressDTO))
                 .birthDate(LocalDate.now().minusYears(18))
                 .createdAt(LocalDateTime.now().minusWeeks(1))
                 .updatedAt(LocalDateTime.now())
@@ -55,6 +58,7 @@ public class DTOGenerator {
     public AddressDTO createAddressDTO() {
         return AddressDTO.builder()
                 .id(UUID.randomUUID())
+                .addressType(AddressType.RESIDENCIAL)
                 .street("Street")
                 .number(1)
                 .complement("Complement")

@@ -20,6 +20,7 @@ public class PersonDTO {
     private String lastName;
     private LocalDate birthDate;
     private List<ContactDTO> contacts;
+    private List<AddressDTO> addresses;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

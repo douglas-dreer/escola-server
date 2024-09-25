@@ -1,5 +1,6 @@
 package br.com.escola_server.models;
 
+import br.com.escola_server.enums.AddressType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,6 +15,7 @@ import java.util.UUID;
 @Builder
 public class AddressDTO {
     private UUID id;
+    private AddressType addressType;
     private String street;
     private int number;
     private String complement;

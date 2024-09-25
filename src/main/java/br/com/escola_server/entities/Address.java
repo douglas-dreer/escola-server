@@ -1,5 +1,6 @@
 package br.com.escola_server.entities;
 
+import br.com.escola_server.enums.AddressType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,6 +23,10 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "address_type", nullable = false)
+    private AddressType type;
 
     @Column(nullable = false)
     private String street;
