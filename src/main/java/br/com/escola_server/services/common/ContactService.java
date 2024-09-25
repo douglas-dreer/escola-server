@@ -1,4 +1,4 @@
-package br.com.escola_server.services;
+package br.com.escola_server.services.common;
 
 import br.com.escola_server.models.ContactDTO;
 
