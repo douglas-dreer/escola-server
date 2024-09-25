@@ -21,7 +21,7 @@ public class DocumentController {
     public DocumentController(DocumentService documentService) {this.documentService = documentService;}
 
     @GetMapping
-    public ResponseEntity<List<DocumentDTO>>findAll() {
+    public ResponseEntity<List<DocumentDTO>> findAll() {
         return ResponseEntity.ok(documentService.findAll());
     }
 
@@ -32,15 +32,15 @@ public class DocumentController {
 
     @PostMapping
     public ResponseEntity<DocumentDTO> save(@RequestBody DocumentDTO documentDTO, HttpServletRequest request) throws URISyntaxException {
-       DocumentDTO documentSaved = documentService.save(documentDTO);
+        DocumentDTO documentSaved = documentService.save(documentDTO);
         URI location = new URI(String.format("%s/%s", request.getRequestURL(), documentSaved.toString()));
         return ResponseEntity.created(location).body(documentSaved);
     }
 
- //   @PutMapping
- //   public ResponseEntity<DocumentDTO> update(@RequestBody DocumentDTO documentDTO) {
- //       return ResponseEntity.ok(documentService.update(documentDTO));
- //   }
+    @PutMapping
+    public ResponseEntity<DocumentDTO> update(@RequestBody DocumentDTO documentDTO) {
+        return ResponseEntity.ok(documentService.update(documentDTO));
+    }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable UUID id) throws Exception {
