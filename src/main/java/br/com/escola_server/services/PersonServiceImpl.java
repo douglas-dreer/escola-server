@@ -5,6 +5,7 @@ import br.com.escola_server.enums.StatusOperationType;
 import br.com.escola_server.exceptions.BusinessException;
 import br.com.escola_server.models.PersonDTO;
 import br.com.escola_server.repositories.PersonRepository;
+import br.com.escola_server.services.common.PersonService;
 import br.com.escola_server.utilitaries.Converter;
 import jakarta.persistence.NoResultException;
 import lombok.extern.log4j.Log4j2;

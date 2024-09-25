@@ -3,6 +3,7 @@ package br.com.escola_server.services;
 import br.com.escola_server.entities.Document;
 import br.com.escola_server.models.DocumentDTO;
 import br.com.escola_server.repositories.DocumentRepository;
+import br.com.escola_server.services.common.DocumentService;
 import br.com.escola_server.utilitaries.Converter;
 import jakarta.persistence.NoResultException;
 import lombok.extern.log4j.Log4j2;

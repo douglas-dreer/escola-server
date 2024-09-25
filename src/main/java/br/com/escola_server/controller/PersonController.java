@@ -1,7 +1,7 @@
 package br.com.escola_server.controller;
 
 import br.com.escola_server.models.PersonDTO;
-import br.com.escola_server.services.PersonService;
+import br.com.escola_server.services.common.PersonService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
